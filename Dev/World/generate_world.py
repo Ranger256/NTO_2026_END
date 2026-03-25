@@ -1,0 +1,69 @@
+import random
+
+def generate_aruco_world_clover(
+    output_file="NTO.world"
+):
+    
+    header = '''<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+
+    <!-- Солнце -->
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Плоскость земли -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://aruco_model_config</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://Human1</uri>
+      <pose>3 5 0 0 0 102</pose>
+    </include>
+
+    <include>
+      <uri>model://tree</uri>
+      <pose>0.5 3 0 0 0 102</pose>
+    </include>
+
+    <include>
+      <uri>model://tree</uri>
+      <pose>2.0 3 0 0 0 102</pose>
+    </include>
+
+    <include>
+      <uri>model://tree</uri>
+      <pose>-0.5 3 0 0 0 102</pose>
+    </include>
+
+    <include>
+      <uri>model://tree</uri>
+      <pose>5 3 0 0 0 102</pose>
+    </include>
+
+  </world>
+</sdf>
+'''
+
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(header)
+
+if __name__ == "__main__":
+    generate_aruco_world_clover()

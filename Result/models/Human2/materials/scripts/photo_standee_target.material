@@ -1,0 +1,20 @@
+material human_2
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            depth_write on
+            cull_hardware none
+            cull_software none
+            texture_unit
+            {
+                texture t2.jpg
+                filtering anisotropic
+                max_anisotropy 16
+                scale 1.0 1.0
+            }
+        }
+    }
+}

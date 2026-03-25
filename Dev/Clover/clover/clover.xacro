@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot name="clover_with_front_cam" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:arg name="clover_dir" default="/home/ilya/NTO/World/Result"/>
+
+  <xacro:include filename="$(find clover_description)/urdf/clover/clover4.xacro"/>
+
+  <xacro:include filename="$(arg clover_dir)/front_cam.xacro"/>
+  <xacro:front_camera parent="base_link" x="0.12" y="0" z="0.03" roll="0" pitch="0" yaw="0"/>
+
+</robot>

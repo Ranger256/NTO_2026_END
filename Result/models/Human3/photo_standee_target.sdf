@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+  <model name="human_3">
+    <static>true</static>
+    <link name="human_3">
+      <!-- Pose of the link relative to the model:
+           x y z roll pitch yaw -->
+      <pose>0 0 0.915 0 0 0</pose>
+
+      <!-- Collision is REQUIRED if you want front_rangefinder / lidar / ray sensors
+           to measure the target distance. -->
+      <collision name="human_3_collision">
+        <geometry>
+          <box>
+            <!-- thickness width height -->
+            <size>0.02 0.57 1.83</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <collide_without_contact>true</collide_without_contact>
+          </contact>
+        </surface>
+      </collision>
+
+      <!-- Visual textured face -->
+      <visual name="human_3_visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <box>
+            <size>0.02 0.57 1.83</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://Human3/materials/scripts</uri>
+            <uri>model://Human3/materials/textures</uri>
+            <name>human_3</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

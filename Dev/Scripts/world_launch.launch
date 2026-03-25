@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="project_root" value="$(dirname)"/>
+
+  <arg name="world_file" value="$(arg project_root)/NTO.world"/>
+  <arg name="models_dir" value="$(arg project_root)/models"/>
+
+  <arg name="mav_id" default="0"/>
+  <arg name="vehicle" default="gazebo-classic_iris"/> <!-- ИМЕННО ТАК ДОЛЖНО БЫТЬ! -->
+  <arg name="est" default="ekf2"/>
+  <arg name="gui" default="true"/>
+  <arg name="debug" default="false"/>
+
+  <env name="GAZEBO_MODEL_PATH"
+       value="$(arg models_dir):$(find clover_simulation)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+  <env name="GAZEBO_RESOURCE_PATH"
+       value="$(arg project_root)/world:$(optenv GAZEBO_RESOURCE_PATH)"/>
+
+  <node name="sitl_$(arg mav_id)" pkg="px4" type="px4" output="screen" required="true"
+        args="$(env HOME)/PX4-Autopilot/build/px4_sitl_default/etc -s etc/init.d-posix/rcS -i $(arg mav_id)">
+    <env name="PX4_SIM_MODEL" value="$(arg vehicle)"/>
+    <env name="PX4_ESTIMATOR" value="$(arg est)"/>
+    <env name="HEADLESS" value="1"/>
+  </node>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_file)"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+  </include>
+
+  <param name="robot_description"
+         command="$(find xacro)/xacro
+                  $(arg models_dir)/clover/clover.xacro
+                  clover_dir:=$(arg models_dir)/clover/"/>
+
+
+  <node name="spawn_clover" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -model clover -x 0 -y 0 -z 0.2"
+        output="screen"/>
+
+  <include file="$(find mavros)/launch/px4.launch">
+    <arg name="fcu_url" value="udp://:14540@127.0.0.1:14557"/>
+  </include>
+
+  
+
+</launch>
